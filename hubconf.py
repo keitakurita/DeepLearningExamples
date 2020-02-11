@@ -79,7 +79,7 @@ def nvidia_ncf(pretrained=True, **kwargs):
         else:
             checkpoint = 'https://developer.nvidia.com/joc-ncf-fp32-pyt-20190225'
         ckpt_file = _download_checkpoint(checkpoint, force_reload)
-        ckpt = torch.load(ckpt_file)
+        ckpt = torch.load(ckpt_file, map_location=torch.device("cpu"))
 
         if checkpoint_from_distributed(ckpt):
             ckpt = unwrap_distributed(ckpt)
@@ -140,7 +140,8 @@ def nvidia_tacotron2(pretrained=True, **kwargs):
         else:
             checkpoint = 'https://api.ngc.nvidia.com/v2/models/nvidia/tacotron2pyt_fp32/versions/1/files/nvidia_tacotron2pyt_fp32_20190306.pth'
         ckpt_file = _download_checkpoint(checkpoint, force_reload)
-        ckpt = torch.load(ckpt_file)
+        device = torch.device("cpu")
+        ckpt = torch.load(ckpt_file, map_location=device)
         state_dict = ckpt['state_dict']
         if checkpoint_from_distributed(state_dict):
             state_dict = unwrap_distributed(state_dict)
@@ -197,7 +198,8 @@ def nvidia_waveglow(pretrained=True, **kwargs):
         else:
             checkpoint = 'https://api.ngc.nvidia.com/v2/models/nvidia/waveglowpyt_fp32/versions/1/files/nvidia_waveglowpyt_fp32_20190306.pth'
         ckpt_file = _download_checkpoint(checkpoint, force_reload)
-        ckpt = torch.load(ckpt_file)
+        device = torch.device("cpu")
+        ckpt = torch.load(ckpt_file, map_location=device)
         state_dict = ckpt['state_dict']
         if checkpoint_from_distributed(state_dict):
             state_dict = unwrap_distributed(state_dict)
@@ -366,7 +368,7 @@ def nvidia_ssd(pretrained=True, **kwargs):
             checkpoint = 'https://api.ngc.nvidia.com/v2/models/nvidia/ssdpyt_fp32/versions/1/files/nvidia_ssdpyt_fp32_20190225.pt'
         # ckpt = torch.hub.load_state_dict_from_url(checkpoint, progress=True, check_hash=False)
         ckpt_file = _download_checkpoint(checkpoint, force_reload)
-        ckpt = torch.load(ckpt_file)
+        ckpt = torch.load(ckpt_file, map_location=torch.device("cpu"))
         ckpt = ckpt['model']
         if checkpoint_from_distributed(ckpt):
             ckpt = unwrap_distributed(ckpt)
